@@ -24,4 +24,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "easydinner"
 include(":app")
+include(":shared")
+include(":server")
  
