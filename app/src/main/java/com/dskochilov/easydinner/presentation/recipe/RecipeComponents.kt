@@ -30,9 +30,11 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.dskochilov.easydinner.R
 import com.dskochilov.easydinner.domain.model.Recipe
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -76,13 +78,13 @@ fun RecipeCard(
             }
             if (recipe.usedIngredients.isNotEmpty()) {
                 IngredientChips(
-                    title = "Есть",
+                    title = stringResource(R.string.recipe_have),
                     ingredients = recipe.usedIngredients,
                 )
             }
             if (recipe.missedIngredients.isNotEmpty()) {
                 IngredientChips(
-                    title = "Докупи",
+                    title = stringResource(R.string.recipe_buy),
                     ingredients = recipe.missedIngredients,
                 )
             }
@@ -136,7 +138,7 @@ fun RecipeDetailBottomSheet(
                     IconButton(onClick = onFavoriteClick) {
                         Icon(
                             imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder,
-                            contentDescription = "Favorite",
+                            contentDescription = stringResource(R.string.favorite_action),
                             tint = if (isFavorite) {
                                 MaterialTheme.colorScheme.tertiary
                             } else {
@@ -147,7 +149,7 @@ fun RecipeDetailBottomSheet(
                     IconButton(onClick = onDismiss) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Close",
+                            contentDescription = stringResource(R.string.close_action),
                         )
                     }
                 }
@@ -156,7 +158,7 @@ fun RecipeDetailBottomSheet(
             if (summary.isNotBlank()) {
                 item {
                     DetailSection(
-                        title = "Summary",
+                        title = stringResource(R.string.recipe_summary),
                         body = summary,
                     )
                 }
@@ -165,7 +167,7 @@ fun RecipeDetailBottomSheet(
             if (instructions.isNotBlank()) {
                 item {
                     DetailSection(
-                        title = "Instructions",
+                        title = stringResource(R.string.recipe_instructions),
                         body = instructions,
                     )
                 }
@@ -174,7 +176,7 @@ fun RecipeDetailBottomSheet(
             if (allIngredients.isNotEmpty()) {
                 item {
                     IngredientChips(
-                        title = "Ingredients",
+                        title = stringResource(R.string.recipe_ingredients),
                         ingredients = allIngredients,
                     )
                 }
@@ -183,7 +185,7 @@ fun RecipeDetailBottomSheet(
             if (recipe.dishTypes.isNotEmpty()) {
                 item {
                     IngredientChips(
-                        title = "Dish types",
+                        title = stringResource(R.string.recipe_dish_types),
                         ingredients = recipe.dishTypes,
                     )
                 }
@@ -192,7 +194,7 @@ fun RecipeDetailBottomSheet(
             if (recipe.diets.isNotEmpty()) {
                 item {
                     IngredientChips(
-                        title = "Diets",
+                        title = stringResource(R.string.recipe_diets),
                         ingredients = recipe.diets,
                     )
                 }
@@ -201,7 +203,7 @@ fun RecipeDetailBottomSheet(
             if (recipe.sourceUrl?.isNotBlank() == true) {
                 item {
                     DetailSection(
-                        title = "Source",
+                        title = stringResource(R.string.recipe_source),
                         body = recipe.sourceUrl,
                     )
                 }
@@ -231,12 +233,11 @@ private fun DetailSection(
 
 @Composable
 private fun RecipeMeta(recipe: Recipe) {
-    val parts = buildList {
-        recipe.readyInMinutes?.let { add("$it мин") }
-        recipe.servings?.let { add("$it порц.") }
-    }
+    val readyInMinutes = recipe.readyInMinutes?.let { stringResource(R.string.minutes_value, it) }
+    val servings = recipe.servings?.let { stringResource(R.string.servings_meta, it) }
+    val parts = listOfNotNull(readyInMinutes, servings)
     Text(
-        text = parts.joinToString(" • "),
+        text = parts.joinToString(" / "),
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )

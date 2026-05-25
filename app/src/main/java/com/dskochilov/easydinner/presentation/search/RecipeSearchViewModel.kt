@@ -2,8 +2,10 @@ package com.dskochilov.easydinner.presentation.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dskochilov.easydinner.R
 import com.dskochilov.easydinner.domain.model.CookingPreferences
 import com.dskochilov.easydinner.domain.usecase.SearchRecipesUseCase
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -15,12 +17,13 @@ class RecipeSearchViewModel(
 
     private val _uiState = MutableStateFlow(RecipeSearchUiState())
     val uiState: StateFlow<RecipeSearchUiState> = _uiState
+    private var searchJob: Job? = null
 
     fun onIngredientTextChange(value: String) {
         _uiState.update {
             it.copy(
                 ingredientText = value,
-                errorMessage = null,
+                errorMessageResId = null,
             )
         }
     }
@@ -62,7 +65,7 @@ class RecipeSearchViewModel(
                 maxReadyTimeMinutes = preferences.maxReadyTimeMinutes,
                 servings = preferences.servings,
                 useOven = preferences.useOven,
-                errorMessage = null,
+                errorMessageResId = null,
             )
         }
 
@@ -76,11 +79,12 @@ class RecipeSearchViewModel(
         ingredientText: String,
         preferences: CookingPreferences,
     ) {
-        viewModelScope.launch {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
             _uiState.update {
                 it.copy(
                     isLoading = true,
-                    errorMessage = null,
+                    errorMessageResId = null,
                 )
             }
 
@@ -98,7 +102,11 @@ class RecipeSearchViewModel(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = error.message ?: "Не удалось найти рецепты",
+                            errorMessageResId = if (error is IllegalArgumentException) {
+                                R.string.search_error_empty_ingredients
+                            } else {
+                                R.string.search_error_generic
+                            },
                         )
                     }
                 }

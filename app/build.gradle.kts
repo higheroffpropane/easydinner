@@ -4,6 +4,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+fun String.asBuildConfigString(): String = "\"${replace("\\", "\\\\").replace("\"", "\\\"")}\""
+
+val releaseApiBaseUrl = providers.gradleProperty("EASYDINNER_API_BASE_URL")
+    .orElse("https://api.easydinner.example")
+
 android {
     namespace = "com.dskochilov.easydinner"
     compileSdk {
@@ -20,12 +25,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8080\"")
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "API_BASE_URL", "http://10.0.2.2:8080".asBuildConfigString())
+        }
         release {
             isMinifyEnabled = false
+            buildConfigField("String", "API_BASE_URL", releaseApiBaseUrl.get().asBuildConfigString())
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -65,8 +73,14 @@ dependencies {
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
+    testImplementation(libs.kotlinx.coroutines.test)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
     testImplementation(libs.junit)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.kaspresso)
+    androidTestImplementation(libs.kaspresso.compose.support)
 }

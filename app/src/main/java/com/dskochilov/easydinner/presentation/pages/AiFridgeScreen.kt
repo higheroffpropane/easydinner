@@ -33,9 +33,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.dskochilov.easydinner.R
+import com.dskochilov.easydinner.presentation.TestTags
 import com.dskochilov.easydinner.presentation.navigation.RefreshablePage
 
 @Composable
@@ -49,7 +53,7 @@ fun AiFridgeScreen(
     }
 
     RefreshablePage(
-        title = "AI",
+        title = stringResource(R.string.screen_ai_title),
         modifier = modifier,
     ) { paddingValues ->
         Column(
@@ -85,12 +89,12 @@ fun AiFridgeScreen(
                         modifier = Modifier.size(54.dp),
                     )
                     Text(
-                        text = "Fridge photo",
+                        text = stringResource(R.string.ai_fridge_photo),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                     )
                     Text(
-                        text = "Camera preview will be here",
+                        text = stringResource(R.string.ai_camera_preview),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center,
@@ -103,7 +107,8 @@ fun AiFridgeScreen(
                 modifier = Modifier
                     .widthIn(max = 420.dp)
                     .fillMaxWidth()
-                    .height(52.dp),
+                    .height(52.dp)
+                    .testTag(TestTags.AI_TAKE_PHOTO),
                 shape = RoundedCornerShape(8.dp),
                 contentPadding = PaddingValues(horizontal = 18.dp),
             ) {
@@ -113,7 +118,7 @@ fun AiFridgeScreen(
                     modifier = Modifier.size(20.dp),
                 )
                 Spacer(modifier = Modifier.size(10.dp))
-                Text("Take photo")
+                Text(stringResource(R.string.ai_take_photo))
             }
         }
     }
@@ -122,12 +127,12 @@ fun AiFridgeScreen(
         AlertDialog(
             onDismissRequest = { showAiResult = false },
             title = {
-                Text("AI result")
+                Text(stringResource(R.string.ai_result_title))
             },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(
-                        text = "Edit recognized ingredients before searching recipes.",
+                        text = stringResource(R.string.ai_result_description),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -154,12 +159,12 @@ fun AiFridgeScreen(
                         modifier = Modifier.size(18.dp),
                     )
                     Spacer(modifier = Modifier.size(8.dp))
-                    Text("Search")
+                    Text(stringResource(R.string.ai_search))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showAiResult = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             },
         )

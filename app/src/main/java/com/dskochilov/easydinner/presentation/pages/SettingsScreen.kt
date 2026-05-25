@@ -33,10 +33,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.dskochilov.easydinner.R
 import com.dskochilov.easydinner.presentation.navigation.RefreshablePage
 
 @Composable
@@ -48,7 +50,7 @@ fun SettingsScreen(
     var notificationsEnabled by rememberSaveable { mutableStateOf(true) }
 
     RefreshablePage(
-        title = "Settings",
+        title = stringResource(R.string.screen_settings_title),
         modifier = modifier,
     ) { paddingValues ->
         LazyColumn(
@@ -97,12 +99,12 @@ private fun SubscriptionCard() {
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
-                        text = "Active subscription",
+                        text = stringResource(R.string.subscription_active),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                     )
                     Text(
-                        text = "18 days left",
+                        text = stringResource(R.string.subscription_days_left),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -114,7 +116,7 @@ private fun SubscriptionCard() {
                 )
             }
             Text(
-                text = "$4.99 / month",
+                text = stringResource(R.string.subscription_price),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
             )
@@ -125,7 +127,7 @@ private fun SubscriptionCard() {
                     .height(48.dp),
                 shape = RoundedCornerShape(8.dp),
             ) {
-                Text("Buy subscription")
+                Text(stringResource(R.string.subscription_buy))
             }
         }
     }
@@ -138,8 +140,8 @@ private fun SettingsRows(
 ) {
     Column {
         ListItem(
-            headlineContent = { Text("Cooking preferences") },
-            supportingContent = { Text("Servings, time and kitchen equipment defaults") },
+            headlineContent = { Text(stringResource(R.string.cooking_preferences)) },
+            supportingContent = { Text(stringResource(R.string.cooking_preferences_subtitle)) },
             leadingContent = {
                 Icon(
                     imageVector = Icons.Default.RestaurantMenu,
@@ -150,8 +152,8 @@ private fun SettingsRows(
         )
         HorizontalDivider()
         ListItem(
-            headlineContent = { Text("Recipe notifications") },
-            supportingContent = { Text("Reminders and saved recipe updates") },
+            headlineContent = { Text(stringResource(R.string.recipe_notifications)) },
+            supportingContent = { Text(stringResource(R.string.recipe_notifications_subtitle)) },
             leadingContent = {
                 Icon(
                     imageVector = Icons.Default.NotificationsNone,
@@ -168,8 +170,8 @@ private fun SettingsRows(
         )
         HorizontalDivider()
         ListItem(
-            headlineContent = { Text("API credentials") },
-            supportingContent = { Text("Keys are stored here before persistence is added") },
+            headlineContent = { Text(stringResource(R.string.api_credentials)) },
+            supportingContent = { Text(stringResource(R.string.api_credentials_subtitle)) },
             leadingContent = {
                 Icon(
                     imageVector = Icons.Default.Key,
@@ -193,7 +195,7 @@ private fun ApiKeyFields(
             value = aiApiKey,
             onValueChange = onAiApiKeyChange,
             modifier = Modifier.fillMaxWidth(),
-            label = { Text("AI API key") },
+            label = { Text(stringResource(R.string.ai_api_key)) },
             singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -203,7 +205,7 @@ private fun ApiKeyFields(
             value = spoonacularApiKey,
             onValueChange = onSpoonacularApiKeyChange,
             modifier = Modifier.fillMaxWidth(),
-            label = { Text("Spoonacular API key") },
+            label = { Text(stringResource(R.string.spoonacular_api_key)) },
             singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),

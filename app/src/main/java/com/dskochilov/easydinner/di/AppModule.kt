@@ -11,6 +11,7 @@ import com.dskochilov.easydinner.presentation.favorites.FavoriteRecipesViewModel
 import com.dskochilov.easydinner.presentation.search.RecipeSearchViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -20,6 +21,11 @@ import org.koin.dsl.module
 val appModule = module {
     single {
         HttpClient(Android) {
+            install(HttpTimeout) {
+                requestTimeoutMillis = 15_000
+                connectTimeoutMillis = 10_000
+                socketTimeoutMillis = 15_000
+            }
             install(ContentNegotiation) {
                 json(Json {
                     ignoreUnknownKeys = true

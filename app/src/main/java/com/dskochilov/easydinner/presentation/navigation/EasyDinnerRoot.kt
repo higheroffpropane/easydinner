@@ -1,5 +1,6 @@
 package com.dskochilov.easydinner.presentation.navigation
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,9 +36,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dskochilov.easydinner.R
+import com.dskochilov.easydinner.presentation.TestTags
 import com.dskochilov.easydinner.presentation.pages.AiFridgeScreen
 import com.dskochilov.easydinner.presentation.pages.FavouritesScreen
 import com.dskochilov.easydinner.presentation.pages.SettingsScreen
@@ -163,6 +168,7 @@ private fun FooterItem(
     Box(
         modifier = modifier
             .height(58.dp)
+            .testTag(tab.testTag)
             .clip(RoundedCornerShape(8.dp))
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
@@ -176,7 +182,7 @@ private fun FooterItem(
             ) {
                 Icon(
                     imageVector = tab.icon,
-                    contentDescription = tab.label,
+                    contentDescription = stringResource(tab.labelResId),
                     tint = contentColor,
                     modifier = Modifier
                         .padding(horizontal = 14.dp, vertical = 4.dp)
@@ -184,7 +190,7 @@ private fun FooterItem(
                 )
             }
             Text(
-                text = tab.label,
+                text = stringResource(tab.labelResId),
                 color = contentColor,
                 fontSize = 11.sp,
                 lineHeight = 13.sp,
@@ -195,23 +201,29 @@ private fun FooterItem(
 }
 
 private enum class EasyDinnerTab(
-    val label: String,
+    @StringRes
+    val labelResId: Int,
     val icon: ImageVector,
+    val testTag: String,
 ) {
     Ai(
-        label = "AI",
+        labelResId = R.string.tab_ai,
         icon = Icons.Filled.AutoAwesome,
+        testTag = TestTags.TAB_AI,
     ),
     Text(
-        label = "Text",
+        labelResId = R.string.tab_text,
         icon = Icons.Filled.TextFields,
+        testTag = TestTags.TAB_TEXT,
     ),
     Favourites(
-        label = "Favourites",
+        labelResId = R.string.tab_favourites,
         icon = Icons.Filled.Star,
+        testTag = TestTags.TAB_FAVOURITES,
     ),
     Settings(
-        label = "Settings",
+        labelResId = R.string.tab_settings,
         icon = Icons.Filled.Settings,
+        testTag = TestTags.TAB_SETTINGS,
     ),
 }

@@ -19,9 +19,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dskochilov.easydinner.R
 import com.dskochilov.easydinner.domain.model.Recipe
 import com.dskochilov.easydinner.presentation.favorites.FavoriteRecipesViewModel
 import com.dskochilov.easydinner.presentation.navigation.RefreshablePage
@@ -39,7 +41,7 @@ fun FavouritesScreen(
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
 
     RefreshablePage(
-        title = "Favourites",
+        title = stringResource(R.string.screen_favourites_title),
         modifier = modifier,
     ) { paddingValues ->
         if (favoriteRecipes.isEmpty()) {
@@ -94,7 +96,7 @@ private fun EmptyFavourites(
             tint = MaterialTheme.colorScheme.primary,
         )
         Text(
-            text = "Избранные рецепты появятся здесь.",
+            text = stringResource(R.string.empty_favourites),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
         )

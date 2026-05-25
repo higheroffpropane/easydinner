@@ -33,11 +33,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dskochilov.easydinner.R
 import com.dskochilov.easydinner.domain.model.Recipe
 import com.dskochilov.easydinner.domain.model.RecipeSource
+import com.dskochilov.easydinner.presentation.TestTags
 import com.dskochilov.easydinner.presentation.favorites.FavoriteRecipesViewModel
 import com.dskochilov.easydinner.presentation.navigation.RefreshablePage
 import com.dskochilov.easydinner.presentation.recipe.RecipeCard
@@ -67,7 +71,7 @@ fun RecipeSearchScreen(
     }
 
     RefreshablePage(
-        title = "EasyDinner",
+        title = stringResource(R.string.app_name),
         modifier = modifier,
     ) { paddingValues ->
         RecipeSearchContent(
@@ -104,7 +108,9 @@ private fun RecipeSearchContent(
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .testTag(TestTags.RECIPE_SEARCH_SCREEN),
         contentPadding = PaddingValues(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -139,13 +145,19 @@ private fun RecipeSearchContent(
                     modifier = Modifier.size(20.dp),
                 )
                 Spacer(modifier = Modifier.size(10.dp))
-                Text(if (state.isLoading) "Ищу рецепты..." else "Найти рецепты")
+                Text(
+                    if (state.isLoading) {
+                        stringResource(R.string.search_loading)
+                    } else {
+                        stringResource(R.string.search_button)
+                    },
+                )
             }
         }
-        state.errorMessage?.let { message ->
+        state.errorMessageResId?.let { messageResId ->
             item {
                 Text(
-                    text = message,
+                    text = stringResource(messageResId),
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -175,7 +187,7 @@ private fun IngredientInput(
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
-            text = "Ингредиенты",
+            text = stringResource(R.string.ingredients_title),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
         )
@@ -185,7 +197,7 @@ private fun IngredientInput(
             modifier = Modifier.fillMaxWidth(),
             minLines = 4,
             placeholder = {
-                Text("курица, рис, сыр, помидоры")
+                Text(stringResource(R.string.ingredients_placeholder))
             },
             shape = RoundedCornerShape(8.dp),
         )
@@ -210,7 +222,7 @@ private fun PreferencesPanel(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(
-                text = "Параметры",
+                text = stringResource(R.string.preferences_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
             )
@@ -220,8 +232,8 @@ private fun PreferencesPanel(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text("Время")
-                    Text("$maxReadyTimeMinutes мин")
+                    Text(stringResource(R.string.time_label))
+                    Text(stringResource(R.string.minutes_value, maxReadyTimeMinutes))
                 }
                 Slider(
                     value = maxReadyTimeMinutes.toFloat(),
@@ -236,7 +248,7 @@ private fun PreferencesPanel(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("Порции")
+                Text(stringResource(R.string.servings_label))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Button(
                         onClick = { onServingsChange(servings - 1) },
@@ -266,7 +278,7 @@ private fun PreferencesPanel(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("Духовка")
+                Text(stringResource(R.string.oven_label))
                 Switch(
                     checked = useOven,
                     onCheckedChange = onUseOvenChange,
@@ -279,14 +291,14 @@ private fun PreferencesPanel(
 @Composable
 private fun SearchSourceLabel(source: RecipeSource?) {
     val label = when (source) {
-        RecipeSource.Mock -> "Локальная заглушка"
+        RecipeSource.Mock -> stringResource(R.string.source_mock)
         RecipeSource.Spoonacular -> "Spoonacular"
         null -> ""
     }
 
     if (label.isNotBlank()) {
         Text(
-            text = "Источник: $label",
+            text = stringResource(R.string.source_label, label),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

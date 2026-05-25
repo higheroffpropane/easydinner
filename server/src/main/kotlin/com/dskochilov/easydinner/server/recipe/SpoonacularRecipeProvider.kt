@@ -6,25 +6,14 @@ import com.dskochilov.easydinner.shared.RecipeSearchResponseDto
 import com.dskochilov.easydinner.shared.RecipeSourceDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 
 class SpoonacularRecipeProvider(
     private val apiKey: String,
-    private val client: HttpClient = HttpClient(CIO) {
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                explicitNulls = false
-            })
-        }
-    },
+    private val client: HttpClient,
 ) : RecipeProvider {
 
     override suspend fun search(request: RecipeSearchRequestDto): RecipeSearchResponseDto {

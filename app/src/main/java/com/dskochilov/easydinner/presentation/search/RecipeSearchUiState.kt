@@ -1,5 +1,6 @@
 package com.dskochilov.easydinner.presentation.search
 
+import androidx.annotation.StringRes
 import com.dskochilov.easydinner.domain.model.Recipe
 import com.dskochilov.easydinner.domain.model.RecipeSource
 
@@ -11,7 +12,7 @@ data class RecipeSearchUiState(
     val isLoading: Boolean = false,
     val recipes: List<Recipe> = emptyList(),
     val source: RecipeSource? = null,
-    val errorMessage: String? = null,
+    @StringRes val errorMessageResId: Int? = null,
 ) {
     companion object {
         const val DefaultMaxReadyTimeMinutes = 30
