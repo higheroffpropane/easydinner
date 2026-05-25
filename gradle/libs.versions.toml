@@ -1,6 +1,8 @@
 [versions]
 agp = "9.2.1"
 activityCompose = "1.13.0"
+camerax = "1.6.1"
+composeLoadingDots = "1.2.3"
 composeBom = "2026.04.01"
 coreKtx = "1.18.0"
 coroutines = "1.10.2"
@@ -18,6 +20,10 @@ serializationJson = "1.9.0"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax" }
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax" }
+compose-loading-dots = { group = "com.github.razaghimahdi", name = "Compose-Loading-Dots", version.ref = "composeLoadingDots" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }

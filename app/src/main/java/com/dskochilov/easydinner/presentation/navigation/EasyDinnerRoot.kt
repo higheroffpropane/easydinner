@@ -2,14 +2,19 @@ package com.dskochilov.easydinner.presentation.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -89,6 +94,7 @@ fun EasyDinnerRoot() {
         ) { page ->
             when (tabs[page]) {
                 EasyDinnerTab.Ai -> AiFridgeScreen(
+                    isActive = selectedPage == EasyDinnerTab.Ai.ordinal,
                     onSearchIngredients = { ingredients ->
                         aiIngredientText = ingredients
                         aiSearchRequestId += 1
@@ -143,6 +149,7 @@ private fun EasyDinnerFooter(
                     )
                 }
             }
+            Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
         }
     }
 }
@@ -170,7 +177,11 @@ private fun FooterItem(
             .height(58.dp)
             .testTag(tab.testTag)
             .clip(RoundedCornerShape(8.dp))
-            .clickable(onClick = onClick),
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick,
+            ),
         contentAlignment = Alignment.Center,
     ) {
         Column(

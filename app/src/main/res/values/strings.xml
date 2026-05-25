@@ -34,7 +34,10 @@
     <string name="empty_favourites">Favourite recipes will appear here.</string>
     <string name="ai_fridge_photo">Fridge photo</string>
     <string name="ai_camera_preview">Camera preview will be here</string>
+    <string name="ai_camera_no_permission">No permission</string>
+    <string name="ai_camera_request_permission">Tap to allow camera permission</string>
     <string name="ai_take_photo">Take photo</string>
+    <string name="ai_recognize_products">Recognize products</string>
     <string name="ai_result_title">AI result</string>
     <string name="ai_result_description">Edit recognized ingredients before searching recipes.</string>
     <string name="ai_search">Search</string>

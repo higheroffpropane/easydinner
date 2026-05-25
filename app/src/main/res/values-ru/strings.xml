@@ -34,7 +34,10 @@
     <string name="empty_favourites">Избранные рецепты появятся здесь.</string>
     <string name="ai_fridge_photo">Фото холодильника</string>
     <string name="ai_camera_preview">Здесь будет превью камеры</string>
+    <string name="ai_camera_no_permission">Нет разрешения</string>
+    <string name="ai_camera_request_permission">Нажмите, чтобы дать разрешение на камеру</string>
     <string name="ai_take_photo">Сделать фото</string>
+    <string name="ai_recognize_products">Распознать продукты</string>
     <string name="ai_result_title">Результат AI</string>
     <string name="ai_result_description">Отредактируй распознанные ингредиенты перед поиском рецептов.</string>
     <string name="ai_search">Искать</string>

@@ -8,6 +8,8 @@ fun String.asBuildConfigString(): String = "\"${replace("\\", "\\\\").replace("\
 
 val releaseApiBaseUrl = providers.gradleProperty("EASYDINNER_API_BASE_URL")
     .orElse("https://api.easydinner.example")
+val debugApiBaseUrl = providers.gradleProperty("EASYDINNER_DEBUG_API_BASE_URL")
+    .orElse("http://10.0.2.2:8080")
 
 android {
     namespace = "com.dskochilov.easydinner"
@@ -29,7 +31,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "API_BASE_URL", "http://10.0.2.2:8080".asBuildConfigString())
+            buildConfigField("String", "API_BASE_URL", debugApiBaseUrl.get().asBuildConfigString())
         }
         release {
             isMinifyEnabled = false
@@ -57,6 +59,10 @@ dependencies {
     implementation(project(":shared"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.compose.loading.dots)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.material3)
