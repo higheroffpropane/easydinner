@@ -28,8 +28,10 @@ class EasyDinnerKaspressoTest : TestCase(
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @Test
-    fun userCanOpenTextSearchTabFromAiTab() = run {
-        step("AI tab is visible on start") {
+    fun userCanOpenCameraThenReturnToSearch() = run {
+        step("Open camera from the default search tab") {
+            composeTestRule.onNodeWithTag(TestTags.RECIPE_SEARCH_SCREEN).assertIsDisplayed()
+            composeTestRule.onNodeWithTag(TestTags.TAB_AI).performClick()
             composeTestRule
                 .onNodeWithTag(TestTags.AI_TAKE_PHOTO)
                 .assertIsDisplayed()

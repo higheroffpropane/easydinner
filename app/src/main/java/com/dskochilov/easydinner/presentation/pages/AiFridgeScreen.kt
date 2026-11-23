@@ -64,9 +64,8 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.dskochilov.easydinner.R
 import com.dskochilov.easydinner.presentation.TestTags
-import com.dskochilov.easydinner.presentation.navigation.RefreshablePage
-import com.razzaghi.compose_loading_dots.LoadingWavy
-import com.razzaghi.compose_loading_dots.core.rememberDotsLoadingController
+import com.dskochilov.easydinner.presentation.navigation.DinnerPage
+import androidx.compose.material3.CircularProgressIndicator
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -85,12 +84,9 @@ fun AiFridgeScreen(
     var isScreenForeground by remember { mutableStateOf(true) }
     val canAcceptRecognitionResult = isActive && isScreenForeground
     val latestCanAcceptRecognitionResult by rememberUpdatedState(canAcceptRecognitionResult)
-    var hasRequestedCameraPermissionOnLaunch by rememberSaveable {
-        mutableStateOf(false)
-    }
     var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
     var recognitionJob by remember { mutableStateOf<Job?>(null) }
-    var isRecognizing by rememberSaveable { mutableStateOf(false) }
+    var isRecognizing by remember { mutableStateOf(false) }
     var showAiResult by rememberSaveable { mutableStateOf(false) }
     var aiIngredients by rememberSaveable {
         mutableStateOf("eggs, cheese, tomatoes, spinach")
@@ -121,10 +117,6 @@ fun AiFridgeScreen(
     )
 
     LaunchedEffect(isActive, hasCameraPermission) {
-        if (isActive && !hasCameraPermission && !hasRequestedCameraPermissionOnLaunch) {
-            hasRequestedCameraPermissionOnLaunch = true
-            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
-        }
         if (!isActive || !hasCameraPermission) {
             imageCapture = null
             cancelRecognition()
@@ -137,7 +129,7 @@ fun AiFridgeScreen(
         }
     }
 
-    RefreshablePage(
+    DinnerPage(
         title = stringResource(R.string.screen_ai_title),
         modifier = modifier,
     ) { paddingValues ->
@@ -307,25 +299,12 @@ private fun ObserveAiScreenLifecycle(
 @Composable
 private fun RecognizeProductsButtonText(state: RecognizeProductsButtonState) {
     if (state.showLoadingDots) {
-        AnimatedDots()
+        CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
     } else {
         state.textResId?.let { textResId ->
             Text(stringResource(textResId))
         }
     }
-}
-
-@Composable
-private fun AnimatedDots() {
-    val controller = rememberDotsLoadingController()
-
-    LoadingWavy(
-        controller = controller,
-        dotsCount = 3,
-        dotsColor = MaterialTheme.colorScheme.onPrimary,
-        dotsSize = 8.dp,
-        duration = 350,
-    )
 }
 
 @Composable

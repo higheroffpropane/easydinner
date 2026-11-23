@@ -7,5 +7,5 @@ object TestTags {
     const val TAB_AI = "tab_ai"
     const val TAB_TEXT = "tab_text"
     const val TAB_FAVOURITES = "tab_favourites"
-    const val TAB_SETTINGS = "tab_settings"
+    const val TAB_PANTRY = "tab_pantry"
 }

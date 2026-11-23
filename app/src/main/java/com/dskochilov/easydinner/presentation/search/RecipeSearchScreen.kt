@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -43,7 +44,7 @@ import com.dskochilov.easydinner.domain.model.Recipe
 import com.dskochilov.easydinner.domain.model.RecipeSource
 import com.dskochilov.easydinner.presentation.TestTags
 import com.dskochilov.easydinner.presentation.favorites.FavoriteRecipesViewModel
-import com.dskochilov.easydinner.presentation.navigation.RefreshablePage
+import com.dskochilov.easydinner.presentation.navigation.DinnerPage
 import com.dskochilov.easydinner.presentation.recipe.RecipeCard
 import com.dskochilov.easydinner.presentation.recipe.RecipeDetailBottomSheet
 import org.koin.compose.viewmodel.koinViewModel
@@ -70,7 +71,7 @@ fun RecipeSearchScreen(
         }
     }
 
-    RefreshablePage(
+    DinnerPage(
         title = stringResource(R.string.app_name),
         modifier = modifier,
     ) { paddingValues ->
@@ -107,7 +108,15 @@ private fun RecipeSearchContent(
     onRecipeClick: (Recipe) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val listState = rememberLazyListState()
+    LaunchedEffect(state.source, state.recipes, state.isLoading) {
+        if (state.source != null && !state.isLoading && state.errorMessageResId == null) {
+            // Three form rows precede the result header (or the empty-state message).
+            listState.animateScrollToItem(3)
+        }
+    }
     LazyColumn(
+        state = listState,
         modifier = modifier
             .fillMaxSize()
             .testTag(TestTags.RECIPE_SEARCH_SCREEN),
@@ -162,6 +171,9 @@ private fun RecipeSearchContent(
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }
+        }
+        if (state.source != null && state.recipes.isEmpty() && !state.isLoading && state.errorMessageResId == null) {
+            item { Text(stringResource(R.string.search_empty_result)) }
         }
         if (state.recipes.isNotEmpty()) {
             item {

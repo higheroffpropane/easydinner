@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">EasyDinner</string>
-    <string name="tab_ai">AI</string>
-    <string name="tab_text">Текст</string>
+    <string name="tab_ai">Камера</string>
+    <string name="tab_text">Поиск</string>
     <string name="tab_favourites">Избранное</string>
-    <string name="tab_settings">Настройки</string>
-    <string name="screen_ai_title">AI</string>
+    <string name="tab_pantry">Идеи</string>
+    <string name="screen_ai_title">Демо камеры</string>
     <string name="screen_favourites_title">Избранное</string>
-    <string name="screen_settings_title">Настройки</string>
+    <string name="pantry_title">Идеи для ужина</string>
     <string name="ingredients_title">Ингредиенты</string>
     <string name="ingredients_placeholder">курица, рис, сыр, помидоры</string>
     <string name="preferences_title">Параметры</string>
@@ -18,7 +18,7 @@
     <string name="search_loading">Ищу рецепты...</string>
     <string name="search_button">Найти рецепты</string>
     <string name="source_label">Источник: %1$s</string>
-    <string name="source_mock">Локальная заглушка</string>
+    <string name="source_mock">Каталог рецептов</string>
     <string name="search_error_empty_ingredients">Добавь хотя бы один ингредиент</string>
     <string name="search_error_generic">Не удалось найти рецепты</string>
     <string name="recipe_have">Есть</string>
@@ -37,21 +37,14 @@
     <string name="ai_camera_no_permission">Нет разрешения</string>
     <string name="ai_camera_request_permission">Нажмите, чтобы дать разрешение на камеру</string>
     <string name="ai_take_photo">Сделать фото</string>
-    <string name="ai_recognize_products">Распознать продукты</string>
-    <string name="ai_result_title">Результат AI</string>
-    <string name="ai_result_description">Отредактируй распознанные ингредиенты перед поиском рецептов.</string>
+    <string name="ai_recognize_products">Попробовать демо</string>
+    <string name="ai_result_title">Пример списка</string>
+    <string name="ai_result_description">Демо камеры подставляет пример списка. Его можно изменить перед поиском.</string>
     <string name="ai_search">Искать</string>
     <string name="cancel">Отмена</string>
-    <string name="subscription_active">Активная подписка</string>
-    <string name="subscription_days_left">Осталось 18 дней</string>
-    <string name="subscription_price">$4.99 / месяц</string>
-    <string name="subscription_buy">Купить подписку</string>
-    <string name="cooking_preferences">Кулинарные настройки</string>
-    <string name="cooking_preferences_subtitle">Порции, время и кухонное оборудование по умолчанию</string>
-    <string name="recipe_notifications">Уведомления о рецептах</string>
-    <string name="recipe_notifications_subtitle">Напоминания и обновления сохраненных рецептов</string>
-    <string name="api_credentials">API-ключи</string>
-    <string name="api_credentials_subtitle">Ключи хранятся здесь до добавления постоянного хранения</string>
-    <string name="ai_api_key">AI API key</string>
-    <string name="spoonacular_api_key">Spoonacular API key</string>
+    <string name="pantry_tip">Выберите продукты для поиска рецептов. На экране поиска список можно изменить.</string>
+    <string name="pantry_eggs">яйца, шпинат, сыр</string>
+    <string name="pantry_pasta">паста, помидоры, сыр</string>
+    <string name="pantry_rice">рис, горошек, яйца</string>
+    <string name="search_empty_result">Рецептов не найдено. Попробуйте другие продукты или измените параметры.</string>
 </resources>

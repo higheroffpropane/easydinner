@@ -19,8 +19,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material3.HorizontalDivider
@@ -50,7 +50,7 @@ import com.dskochilov.easydinner.R
 import com.dskochilov.easydinner.presentation.TestTags
 import com.dskochilov.easydinner.presentation.pages.AiFridgeScreen
 import com.dskochilov.easydinner.presentation.pages.FavouritesScreen
-import com.dskochilov.easydinner.presentation.pages.SettingsScreen
+import com.dskochilov.easydinner.presentation.pages.PantryScreen
 import com.dskochilov.easydinner.presentation.search.RecipeSearchScreen
 import kotlinx.coroutines.launch
 
@@ -58,7 +58,7 @@ import kotlinx.coroutines.launch
 fun EasyDinnerRoot() {
     val tabs = remember { EasyDinnerTab.entries.toList() }
     val pagerState = rememberPagerState(
-        initialPage = EasyDinnerTab.Ai.ordinal,
+        initialPage = EasyDinnerTab.Search.ordinal,
         pageCount = { tabs.size },
     )
     val coroutineScope = rememberCoroutineScope()
@@ -68,6 +68,15 @@ fun EasyDinnerRoot() {
 
     LaunchedEffect(pagerState.currentPage) {
         selectedPage = pagerState.currentPage
+    }
+
+    val showSearch: (String) -> Unit = { ingredients ->
+        aiIngredientText = ingredients
+        aiSearchRequestId += 1
+        selectedPage = EasyDinnerTab.Search.ordinal
+        coroutineScope.launch {
+            pagerState.animateScrollToPage(EasyDinnerTab.Search.ordinal)
+        }
     }
 
     Scaffold(
@@ -93,19 +102,12 @@ fun EasyDinnerRoot() {
             verticalAlignment = Alignment.Top,
         ) { page ->
             when (tabs[page]) {
-                EasyDinnerTab.Ai -> AiFridgeScreen(
-                    isActive = selectedPage == EasyDinnerTab.Ai.ordinal,
-                    onSearchIngredients = { ingredients ->
-                        aiIngredientText = ingredients
-                        aiSearchRequestId += 1
-                        selectedPage = EasyDinnerTab.Text.ordinal
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(EasyDinnerTab.Text.ordinal)
-                        }
-                    },
+                EasyDinnerTab.Camera -> AiFridgeScreen(
+                    isActive = selectedPage == EasyDinnerTab.Camera.ordinal,
+                    onSearchIngredients = showSearch,
                     modifier = Modifier.fillMaxSize(),
                 )
-                EasyDinnerTab.Text -> RecipeSearchScreen(
+                EasyDinnerTab.Search -> RecipeSearchScreen(
                     modifier = Modifier.fillMaxSize(),
                     aiIngredientText = aiIngredientText,
                     aiSearchRequestId = aiSearchRequestId,
@@ -114,7 +116,7 @@ fun EasyDinnerRoot() {
                     },
                 )
                 EasyDinnerTab.Favourites -> FavouritesScreen(modifier = Modifier.fillMaxSize())
-                EasyDinnerTab.Settings -> SettingsScreen(modifier = Modifier.fillMaxSize())
+                EasyDinnerTab.Pantry -> PantryScreen(onSearch = showSearch, modifier = Modifier.fillMaxSize())
             }
         }
     }
@@ -217,12 +219,12 @@ private enum class EasyDinnerTab(
     val icon: ImageVector,
     val testTag: String,
 ) {
-    Ai(
+    Camera(
         labelResId = R.string.tab_ai,
-        icon = Icons.Filled.AutoAwesome,
+        icon = Icons.Filled.PhotoCamera,
         testTag = TestTags.TAB_AI,
     ),
-    Text(
+    Search(
         labelResId = R.string.tab_text,
         icon = Icons.Filled.TextFields,
         testTag = TestTags.TAB_TEXT,
@@ -232,9 +234,9 @@ private enum class EasyDinnerTab(
         icon = Icons.Filled.Star,
         testTag = TestTags.TAB_FAVOURITES,
     ),
-    Settings(
-        labelResId = R.string.tab_settings,
-        icon = Icons.Filled.Settings,
-        testTag = TestTags.TAB_SETTINGS,
+    Pantry(
+        labelResId = R.string.tab_pantry,
+        icon = Icons.Filled.RestaurantMenu,
+        testTag = TestTags.TAB_PANTRY,
     ),
 }
