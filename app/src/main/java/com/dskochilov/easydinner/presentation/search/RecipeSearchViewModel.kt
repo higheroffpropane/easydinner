@@ -84,6 +84,8 @@ class RecipeSearchViewModel(
             _uiState.update {
                 it.copy(
                     isLoading = true,
+                    recipes = emptyList(),
+                    source = null,
                     errorMessageResId = null,
                 )
             }

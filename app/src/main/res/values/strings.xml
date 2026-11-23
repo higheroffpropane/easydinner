@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">EasyDinner</string>
-    <string name="tab_ai">AI</string>
-    <string name="tab_text">Text</string>
+    <string name="tab_ai">Camera</string>
+    <string name="tab_text">Search</string>
     <string name="tab_favourites">Favourites</string>
-    <string name="tab_settings">Settings</string>
-    <string name="screen_ai_title">AI</string>
+    <string name="tab_pantry">Pantry</string>
+    <string name="screen_ai_title">Camera demo</string>
     <string name="screen_favourites_title">Favourites</string>
-    <string name="screen_settings_title">Settings</string>
+    <string name="pantry_title">Pantry ideas</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="ingredients_placeholder">chicken, rice, cheese, tomatoes</string>
     <string name="preferences_title">Preferences</string>
@@ -18,7 +18,7 @@
     <string name="search_loading">Searching recipes...</string>
     <string name="search_button">Find recipes</string>
     <string name="source_label">Source: %1$s</string>
-    <string name="source_mock">Local mock</string>
+    <string name="source_mock">Pantry catalogue</string>
     <string name="search_error_empty_ingredients">Add at least one ingredient</string>
     <string name="search_error_generic">Could not find recipes</string>
     <string name="recipe_have">Have</string>
@@ -37,21 +37,14 @@
     <string name="ai_camera_no_permission">No permission</string>
     <string name="ai_camera_request_permission">Tap to allow camera permission</string>
     <string name="ai_take_photo">Take photo</string>
-    <string name="ai_recognize_products">Recognize products</string>
-    <string name="ai_result_title">AI result</string>
-    <string name="ai_result_description">Edit recognized ingredients before searching recipes.</string>
+    <string name="ai_recognize_products">Try sample capture</string>
+    <string name="ai_result_title">Sample ingredients</string>
+    <string name="ai_result_description">This camera demo uses a sample list. Edit it before searching.</string>
     <string name="ai_search">Search</string>
     <string name="cancel">Cancel</string>
-    <string name="subscription_active">Active subscription</string>
-    <string name="subscription_days_left">18 days left</string>
-    <string name="subscription_price">$4.99 / month</string>
-    <string name="subscription_buy">Buy subscription</string>
-    <string name="cooking_preferences">Cooking preferences</string>
-    <string name="cooking_preferences_subtitle">Servings, time and kitchen equipment defaults</string>
-    <string name="recipe_notifications">Recipe notifications</string>
-    <string name="recipe_notifications_subtitle">Reminders and saved recipe updates</string>
-    <string name="api_credentials">API credentials</string>
-    <string name="api_credentials_subtitle">Keys are stored here before persistence is added</string>
-    <string name="ai_api_key">AI API key</string>
-    <string name="spoonacular_api_key">Spoonacular API key</string>
+    <string name="pantry_tip">Choose ingredients to search for dinner. You can change them on the search screen.</string>
+    <string name="pantry_eggs">eggs, spinach, cheese</string>
+    <string name="pantry_pasta">pasta, tomatoes, cheese</string>
+    <string name="pantry_rice">rice, peas, eggs</string>
+    <string name="search_empty_result">No matching recipes. Try fewer restrictions or different ingredients.</string>
 </resources>

@@ -26,7 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dskochilov.easydinner.R
 import com.dskochilov.easydinner.domain.model.Recipe
 import com.dskochilov.easydinner.presentation.favorites.FavoriteRecipesViewModel
-import com.dskochilov.easydinner.presentation.navigation.RefreshablePage
+import com.dskochilov.easydinner.presentation.navigation.DinnerPage
 import com.dskochilov.easydinner.presentation.recipe.RecipeCard
 import com.dskochilov.easydinner.presentation.recipe.RecipeDetailBottomSheet
 import org.koin.compose.viewmodel.koinViewModel
@@ -40,7 +40,7 @@ fun FavouritesScreen(
     val favoriteRecipeIds by viewModel.favoriteRecipeIds.collectAsStateWithLifecycle()
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
 
-    RefreshablePage(
+    DinnerPage(
         title = stringResource(R.string.screen_favourites_title),
         modifier = modifier,
     ) { paddingValues ->

@@ -1,6 +1,6 @@
 package com.dskochilov.easydinner.server
 
-import com.dskochilov.easydinner.server.recipe.MockRecipeProvider
+import com.dskochilov.easydinner.server.recipe.PantryRecipeProvider
 import com.dskochilov.easydinner.server.recipe.SpoonacularRecipeProvider
 import com.dskochilov.easydinner.shared.RecipeSearchRequestDto
 import io.ktor.client.HttpClient
@@ -54,7 +54,7 @@ fun Application.module() {
         }
     }
     val recipeProvider = if (apiKey.isBlank()) {
-        MockRecipeProvider()
+        PantryRecipeProvider()
     } else {
         SpoonacularRecipeProvider(apiKey, checkNotNull(spoonacularClient))
     }
@@ -103,6 +103,9 @@ private fun RecipeSearchRequestDto.normalized(): RecipeSearchRequestDto {
     require(normalizedIngredients.all { it.length <= MaxIngredientLength }) {
         "Ingredient names must be $MaxIngredientLength characters or fewer"
     }
+
+    preferences.servings?.let { require(it in 1..8) { "Servings must be between 1 and 8" } }
+    preferences.maxReadyTimeMinutes?.let { require(it in 1..120) { "Maximum time must be between 1 and 120 minutes" } }
 
     return copy(ingredients = normalizedIngredients)
 }
